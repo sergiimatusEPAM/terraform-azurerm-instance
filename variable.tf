@@ -23,16 +23,13 @@ variable "ssh_private_key_filename" {
   default = "/dev/null"
 }
 
-# Element by zone list
-variable "zone_list" {
-  type = "list"
-}
-
-# Source image to boot from
+# Source image to boot from. We assume the user has already take care of the prereq during this step.
 variable "image" {}
 
-# Disk Type to Leverage. The GCE disk type. Can be either "pd-ssd", "local-ssd", or "pd-standard". (optional)
-variable "disk_type" {}
+# Disk Type to Leverage. The managed disk type. (optional)
+variable "disk_type" {
+  default = "Standard_LRS"
+}
 
 # Disk Size in GB
 variable "disk_size" {}

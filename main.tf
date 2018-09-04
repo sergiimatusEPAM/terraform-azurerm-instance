@@ -82,7 +82,7 @@ resource "azurerm_virtual_machine" "instance" {
     name              = "os-disk-instance-${count.index + 1}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+    managed_disk_type = "${var.disk_type}"
   }
 
   storage_data_disk {
@@ -113,9 +113,11 @@ resource "azurerm_virtual_machine" "instance" {
     destination = "/tmp/os-setup.sh"
 
     connection {
-      type = "ssh"
-      user = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
-      host = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
+      type        = "ssh"
+      user        = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+      host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
+      private_key = "${local.private_key}"
+      agent       = "${local.agent}"
     }
   }
 
@@ -129,9 +131,11 @@ resource "azurerm_virtual_machine" "instance" {
     ]
 
     connection {
-      type = "ssh"
-      user = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
-      host = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
+      type        = "ssh"
+      user        = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+      host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
+      private_key = "${local.private_key}"
+      agent       = "${local.agent}"
     }
   }
 

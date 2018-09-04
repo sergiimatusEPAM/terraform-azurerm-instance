@@ -23,11 +23,6 @@ output "dcos_instance_os" {
   value = "${var.dcos_instance_os}"
 }
 
-# Element by zone list
-output "zone_list" {
-  value = "${var.zone_list}"
-}
-
 # Source image to boot from
 output "image" {
   value = "${var.image}"
