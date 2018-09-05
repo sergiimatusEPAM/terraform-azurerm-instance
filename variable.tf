@@ -43,18 +43,15 @@ variable "network_instance_id" {
 }
 
 # Customer Provided Userdata
-variable "user_data" {}
+variable "user_data" {
+  default = ""
+}
 
 # SSH User
 variable "admin_username" {}
 
 # SSH Public Key
 variable "public_ssh_key" {}
-
-# Allow stopping for update (bool)
-variable "allow_stopping_for_update" {
-  default = "true"
-}
 
 # Add special tags to the resources created by this module
 variable "tags" {

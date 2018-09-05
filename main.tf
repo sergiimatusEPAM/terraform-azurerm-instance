@@ -96,6 +96,7 @@ resource "azurerm_virtual_machine" "instance" {
   os_profile {
     computer_name  = "instance-${count.index + 1}"
     admin_username = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+    custom_data    = "${var.user_data}"
   }
 
   os_profile_linux_config {
