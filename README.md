@@ -15,12 +15,12 @@ module "terraform-azurerm-instance" {
 }
 ```
 
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | admin_username | SSH User | string | - | yes |
-| allow_stopping_for_update | Allow stopping for update (bool) | string | `true` | no |
 | dcos_instance_os | Tested OSes to install with prereq | string | - | yes |
 | dcos_version | DCOS Version for prereq install | string | - | yes |
 | disk_size | Disk Size in GB | string | - | yes |
@@ -31,12 +31,16 @@ module "terraform-azurerm-instance" {
 | location | Location (region) | string | - | yes |
 | name_prefix | Cluster Name | string | - | yes |
 | network_instance_id | Network Instance IDs | list | - | yes |
+| network_security_group_id | Security Group Id | string | `` | no |
 | num_instances | Number of Instance | string | - | yes |
+| private_backend_address_pool | Private backend address pool | string | `` | no |
+| public_backend_address_pool | Public backend address pool | string | `` | no |
 | public_ssh_key | SSH Public Key | string | - | yes |
 | resource_group_name | Resource Group Name | string | - | yes |
 | ssh_private_key_filename | Private SSH Key Filename Optional | string | `/dev/null` | no |
+| subnet_id | Subnet ID | string | - | yes |
 | tags | Add special tags to the resources created by this module | list | `<list>` | no |
-| user_data | Customer Provided Userdata | string | - | yes |
+| user_data | Customer Provided Userdata | string | `` | no |
 
 ## Outputs
 
@@ -52,8 +56,11 @@ module "terraform-azurerm-instance" {
 | name_prefix | Cluster Name |
 | network_instance_id | Network Instance ID |
 | num_instances | Number of Instance |
+| private_backend_address_pool | Private backend address pool |
 | private_ips | Private IP Addresses |
+| public_backend_address_pool | Public backend address pool |
 | public_ips | Public IP Addresses |
 | public_ssh_key | SSH Public Key |
 | resource_group_name | Resource Group Name |
+| subnet_id | Subnet ID |
 | user_data | Customer Provided Userdata |
