@@ -48,9 +48,9 @@ output "user_data" {
   value = "${var.user_data}"
 }
 
-# Network Instance ID
-output "network_instance_id" {
-  value = "${var.network_instance_id}"
+# Network Security Group ID
+output "network_security_group_id" {
+  value = "${var.network_security_group_id}"
 }
 
 # SSH User
@@ -80,7 +80,7 @@ output "subnet_id" {
 
 # Private IP Addresses
 output "private_ips" {
-  value = ["${data.azurerm_network_interface.instance.*.private_ip_address}"]
+  value = ["${azurerm_network_interface.instance_nic.*.private_ip_address}"]
 }
 
 # Public IP Addresses

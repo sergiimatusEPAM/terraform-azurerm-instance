@@ -52,13 +52,6 @@ resource "azurerm_availability_set" "instance_av_set" {
   managed                      = true
 }
 
-# Retrieve the network interface objects to consume metedata information about them
-data "azurerm_network_interface" "instance" {
-  count                 = "${length(var.network_instance_id)}"
-  network_interface_ids = ["${element(var.network_instance_id, count.index)}"]
-  resource_group_name   = "${var.resource_group_name}"
-}
-
 # Instance NICs
 resource "azurerm_network_interface" "instance_nic" {
   name                      = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-nic"
