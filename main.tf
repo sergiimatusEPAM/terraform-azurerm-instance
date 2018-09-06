@@ -59,12 +59,32 @@ data "azurerm_network_interface" "instance" {
   resource_group_name   = "${var.resource_group_name}"
 }
 
+# Instance NICs
+resource "azurerm_network_interface" "instance_nic" {
+  name                      = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-nic"
+  location                  = "${var.location}"
+  resource_group_name       = "${var.resource_group_name}"
+  network_security_group_id = "${var.network_security_group_id}"
+  count                     = "${var.num_instances}"
+
+  ip_configuration {
+    name                                    = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-ipConfig"
+    subnet_id                               = "${var.subnet_id}"
+    private_ip_address_allocation           = "dynamic"
+    public_ip_address_id                    = "${element(azurerm_public_ip.instance_public_ip.*.id, count.index)}"
+    load_balancer_backend_address_pools_ids = ["${var.public_backend_address_pool}", "${var.private_backend_address_pool}"]
+  }
+
+  tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, var.name_prefix),
+                                "Cluster", var.name_prefix))}"
+}
+
 # Master VM Coniguration
 resource "azurerm_virtual_machine" "instance" {
   name                             = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-${count.index + 1}"
   location                         = "${var.location}"
   resource_group_name              = "${var.resource_group_name}"
-  network_interface_ids            = ["${var.network_instance_id[count.index]}"]
+  network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
   availability_set_id              = "${azurerm_availability_set.instance_av_set.id}"
   vm_size                          = "${var.instance_type}"
   count                            = "${var.num_instances}"

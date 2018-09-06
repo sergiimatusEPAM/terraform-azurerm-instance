@@ -63,3 +63,21 @@ variable "tags" {
 variable "hostname_format" {
   default = "instance-%[1]d-%[2]s"
 }
+
+# Public backend address pool 
+variable "public_backend_address_pool" {
+  default = ""
+}
+
+# Private backend address pool 
+variable "private_backend_address_pool" {
+  default = ""
+}
+
+# Security Group Id
+variable "network_security_group_id" {
+  default = ""
+}
+
+# Subnet ID
+variable "subnet_id" {}
