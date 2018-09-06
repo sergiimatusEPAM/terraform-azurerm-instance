@@ -61,13 +61,13 @@ variable "hostname_format" {
 
 # Public backend address pool 
 variable "public_backend_address_pool" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
 # Private backend address pool 
 variable "private_backend_address_pool" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
