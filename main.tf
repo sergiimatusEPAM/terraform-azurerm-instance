@@ -74,7 +74,7 @@ resource "azurerm_network_interface" "instance_nic" {
 
 # Master VM Coniguration
 resource "azurerm_virtual_machine" "instance" {
-  name                             = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-${count.index + 1}"
+  name                             = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
   location                         = "${var.location}"
   resource_group_name              = "${var.resource_group_name}"
   network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
@@ -92,7 +92,7 @@ resource "azurerm_virtual_machine" "instance" {
   }
 
   storage_os_disk {
-    name              = "os-disk-instance-${count.index + 1}"
+    name              = "os-disk-${format(var.hostname_format, count.index + 1, var.name_prefix)}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "${var.disk_type}"
@@ -107,7 +107,7 @@ resource "azurerm_virtual_machine" "instance" {
   }
 
   os_profile {
-    computer_name  = "instance-${count.index + 1}"
+    computer_name  = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
     admin_username = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
     custom_data    = "${var.user_data}"
   }
