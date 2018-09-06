@@ -50,8 +50,8 @@ variable "public_ssh_key" {}
 
 # Add special tags to the resources created by this module
 variable "tags" {
-  type    = "list"
-  default = []
+  type        = "map"
+  default     = {}
 }
 
 # Format the hostname inputs are index+1, region, name_prefix
