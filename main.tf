@@ -21,7 +21,7 @@ module "dcos-tested-oses" {
 # instance Node
 resource "azurerm_managed_disk" "instance_managed_disk" {
   count                = "${var.num_instances}"
-  name                 = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-${count.index + 1}"
+  name                 = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   storage_account_type = "Standard_LRS"
@@ -32,11 +32,11 @@ resource "azurerm_managed_disk" "instance_managed_disk" {
 # Public IP addresses for the Public Front End load Balancer
 resource "azurerm_public_ip" "instance_public_ip" {
   count                        = "${var.num_instances}"
-  name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-pub-ip-${count.index + 1}"
+  name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-pub-ip"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
   public_ip_address_allocation = "dynamic"
-  domain_name_label            = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-${count.index + 1}"
+  domain_name_label            = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
 
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, var.name_prefix),
                                 "Cluster", var.name_prefix))}"
@@ -44,7 +44,7 @@ resource "azurerm_public_ip" "instance_public_ip" {
 
 # Create an availability set
 resource "azurerm_availability_set" "instance_av_set" {
-  name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-instance-avset"
+  name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-avset"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
   platform_fault_domain_count  = 3
