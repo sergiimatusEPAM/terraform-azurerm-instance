@@ -65,7 +65,7 @@ resource "azurerm_network_interface" "instance_nic" {
     subnet_id                               = "${var.subnet_id}"
     private_ip_address_allocation           = "dynamic"
     public_ip_address_id                    = "${element(azurerm_public_ip.instance_public_ip.*.id, count.index)}"
-    load_balancer_backend_address_pools_ids = ["${concat(compact(var.public_backend_address_pool, var.private_backend_address_pool))}"]
+    load_balancer_backend_address_pools_ids = ["${compact(concat(var.public_backend_address_pool, var.private_backend_address_pool))}"]
   }
 
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, var.name_prefix),
