@@ -65,12 +65,12 @@ output "public_ssh_key" {
 
 # Public backend address pool 
 output "public_backend_address_pool" {
-  value = "${var.public_backend_address_pool}"
+  value = ["${var.public_backend_address_pool}"]
 }
 
 # Private backend address pool 
 output "private_backend_address_pool" {
-  value = "${var.private_backend_address_pool}"
+  value = ["${var.private_backend_address_pool}"]
 }
 
 # Subnet ID
