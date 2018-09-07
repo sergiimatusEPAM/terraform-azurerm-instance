@@ -10,7 +10,7 @@ module "dcos-tested-oses" {
   version = "~> 0.0"
 
   providers = {
-    google = "azurerm"
+    azurerm = "azurerm"
   }
 
   os           = "${var.dcos_instance_os}"
