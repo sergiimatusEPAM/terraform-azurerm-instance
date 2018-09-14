@@ -87,3 +87,8 @@ output "private_ips" {
 output "public_ips" {
   value = ["${azurerm_public_ip.instance_public_ip.*.fqdn}"]
 }
+
+# Returns the ID of the prereq script
+output "prereq_id" {
+  value = "${join(",", flatten(list(null_resource.instance-prereq.*.id)))}"
+}

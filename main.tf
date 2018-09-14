@@ -121,38 +121,32 @@ resource "azurerm_virtual_machine" "instance" {
     }
   }
 
-  # OS init script
-  provisioner "file" {
-    content     = "${module.dcos-tested-oses.os-setup}"
-    destination = "/tmp/os-setup.sh"
-
-    connection {
-      type        = "ssh"
-      user        = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
-      host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
-      private_key = "${local.private_key}"
-      agent       = "${local.agent}"
-    }
-  }
-
-  # We run a remote provisioner on the instance after creating it.
-  # In this case, we just install nginx and start it. By default,
-  # this should be on port 80
-  provisioner "remote-exec" {
-    inline = [
-      "sudo chmod +x /tmp/os-setup.sh",
-      "sudo bash /tmp/os-setup.sh",
-    ]
-
-    connection {
-      type        = "ssh"
-      user        = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
-      host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
-      private_key = "${local.private_key}"
-      agent       = "${local.agent}"
-    }
-  }
-
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, var.name_prefix),
                                 "Cluster", var.name_prefix))}"
+}
+
+resource "null_resource" "instance-prereq" {
+  # If the user supplies an AMI or user_data we expect the prerequisites are met.
+  count = "${var.num_instances}"
+
+  connection {
+    host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
+    user        = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+    private_key = "${local.private_key}"
+    agent       = "${local.agent}"
+  }
+
+  provisioner "file" {
+    content     = "${module.dcos-tested-oses.os-setup}"
+    destination = "/tmp/dcos-prereqs.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/dcos-prereqs.sh",
+      "sudo bash -x /tmp/dcos-prereqs.sh",
+    ]
+  }
+
+  depends_on = ["azurerm_virtual_machine.instance"]
 }
