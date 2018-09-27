@@ -31,6 +31,7 @@ variable "dcos_instance_os" {
 # Private SSH Key Filename Optional
 variable "ssh_private_key_filename" {
   description = "Path to the SSH private key"
+
   # cannot leave this empty as the file() interpolation will fail later on for the private_key local variable
   # https://github.com/hashicorp/terraform/issues/15605
   default = "/dev/null"
@@ -44,7 +45,7 @@ variable "image" {
 # Disk Type to Leverage. The managed disk type. (optional)
 variable "disk_type" {
   description = "Disk Type to Leverage."
-  default = "Standard_LRS"
+  default     = "Standard_LRS"
 }
 
 # Disk Size in GB
@@ -60,7 +61,7 @@ variable "resource_group_name" {
 # Customer Provided Userdata
 variable "user_data" {
   description = "User data to be used on these instances (cloud-init)"
-  default = ""
+  default     = ""
 }
 
 # SSH User
@@ -76,34 +77,34 @@ variable "public_ssh_key" {
 # Add special tags to the resources created by this module
 variable "tags" {
   description = "Add custom tags to all resources"
-  type    = "map"
-  default = {}
+  type        = "map"
+  default     = {}
 }
 
 # Format the hostname inputs are index+1, region, name_prefix
 variable "hostname_format" {
   description = "Format the hostname inputs are index+1, region, cluster_name"
-  default = "instance-%[1]d-%[2]s"
+  default     = "instance-%[1]d-%[2]s"
 }
 
 # Public backend address pool 
 variable "public_backend_address_pool" {
   description = "public backend address pool"
-  type    = "list"
-  default = []
+  type        = "list"
+  default     = []
 }
 
 # Private backend address pool 
 variable "private_backend_address_pool" {
   description = "private backend address pool"
-  type    = "list"
-  default = []
+  type        = "list"
+  default     = []
 }
 
 # Security Group Id
 variable "network_security_group_id" {
   description = "network security group id"
-  default = ""
+  default     = ""
 }
 
 # Subnet ID
