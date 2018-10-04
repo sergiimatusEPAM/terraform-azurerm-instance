@@ -1,21 +1,24 @@
 [![Build Status](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/badge/icon)](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/)
-![HashiCorp's Terraform](https://cultivatedops-static.s3.amazonaws.com/thirdparty/terraform/logo-50.png)
-
-This repository is a [Terraform](https://terraform.io/) Module for azurerm virtual machine instances
 
 The module creates AzureRM virtual machine instances
 
-# Usage
+## EXAMPLE
 
-Add the module to your Terraform resources like so:
+```hcl
+module "dcos-master-instances" {
+  source  = "dcos-terraform/instance/azurerm"
+  version = "~> 0.0"
 
-```
-module "terraform-azurerm-instance" {
-  source = "./terraform-module-terraform-azurerm-instance"
-  arg1 = "foo"
+  num_instances                = "${var.num_masters}"
+  location                     = "${var.location}"
+  dcos_version                 = "${var.dcos_version}"
+  dcos_instance_os             = "${var.dcos_instance_os}"
+  ssh_private_key_filename     = "${var.ssh_private_key_filename}"
+  image                        = "${var.image}"
+  resource_group_name          = "${var.resource_group_name}"
+  ...
 }
 ```
-
 
 ## Inputs
 
