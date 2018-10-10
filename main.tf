@@ -42,6 +42,13 @@ module "dcos-tested-oses" {
   dcos_version = "${var.dcos_version}"
 }
 
+locals {
+  image_publisher = "${length(var.image) > 0 ? lookup(var.image, "publisher", "") : module.dcos-tested-oses.azure_publisher }"
+  image_sku       = "${length(var.image) > 0 ? lookup(var.image, "sku", "") : module.dcos-tested-oses.azure_sku }"
+  image_version   = "${length(var.image) > 0 ? lookup(var.image, "version", "") : module.dcos-tested-oses.azure_version }"
+  image_offer     = "${length(var.image) > 0 ? lookup(var.image, "offer", "") : module.dcos-tested-oses.azure_offer }"
+}
+
 # instance Node
 resource "azurerm_managed_disk" "instance_managed_disk" {
   count                = "${var.num_instances}"
@@ -109,10 +116,11 @@ resource "azurerm_virtual_machine" "instance" {
   delete_data_disks_on_termination = true
 
   storage_image_reference {
-    publisher = "${module.dcos-tested-oses.azure_publisher}"
-    offer     = "${module.dcos-tested-oses.azure_offer}"
-    sku       = "${module.dcos-tested-oses.azure_sku}"
-    version   = "${module.dcos-tested-oses.azure_version}"
+    publisher = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_publisher}"
+    offer     = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_offer}"
+    sku       = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_sku}"
+    version   = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_version}"
+    id        = "${lookup(var.image, "id", "")}"
   }
 
   storage_os_disk {
