@@ -25,23 +25,23 @@ module "dcos-master-instances" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| admin_username | admin username | string | - | yes |
+| admin_username | SSH User | string | - | yes |
 | custom_data | User data to be used on these instances (cloud-init) | string | `` | no |
 | dcos_instance_os | Operating system to use. Instead of using your own AMI you could use a provided OS. | string | - | yes |
 | dcos_version | Specifies which DC/OS version instruction to use. Options: 1.9.0, 1.8.8, etc. See dcos_download_path or dcos_version tree for a full list. | string | - | yes |
-| disk_size | disk size | string | - | yes |
-| disk_type | Disk Type to Leverage. | string | `Standard_LRS` | no |
+| disk_size | Disk Size in GB | string | - | yes |
+| disk_type | Disk Type to Leverage | string | `Standard_LRS` | no |
 | hostname_format | Format the hostname inputs are index+1, region, cluster_name | string | `instance-%[1]d-%[2]s` | no |
-| image | A storage_image_reference reference. | map | `<map>` | no |
-| instance_type | instance type | string | - | yes |
-| location | location | string | - | yes |
+| image | Source image to boot from | map | `<map>` | no |
+| instance_type | Instance Type | string | - | yes |
+| location | Azure Region | string | - | yes |
 | name_prefix | Cluster Name | string | - | yes |
-| network_security_group_id | network security group id | string | `` | no |
+| network_security_group_id | Security Group Id | string | `` | no |
 | num | How many instances should be created | string | - | yes |
-| private_backend_address_pool | private backend address pool | list | `<list>` | no |
-| public_backend_address_pool | public backend address pool | list | `<list>` | no |
-| public_ssh_key | public ssh key | string | - | yes |
-| resource_group_name | resource group name | string | - | yes |
+| private_backend_address_pool | Private backend address pool | list | `<list>` | no |
+| public_backend_address_pool | Public backend address pool | list | `<list>` | no |
+| public_ssh_key | SSH Public Key | string | - | yes |
+| resource_group_name | Name of the azure resource group | string | - | yes |
 | ssh_private_key_filename | Path to the SSH private key | string | `/dev/null` | no |
 | subnet_id | Subnet ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
