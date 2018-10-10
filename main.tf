@@ -142,7 +142,7 @@ resource "azurerm_virtual_machine" "instance" {
   os_profile {
     computer_name  = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
     admin_username = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
-    custom_data    = "${var.user_data}"
+    custom_data    = "${var.custom_data}"
   }
 
   os_profile_linux_config {
@@ -159,8 +159,9 @@ resource "azurerm_virtual_machine" "instance" {
 }
 
 resource "null_resource" "instance-prereq" {
-  # If the user supplies an AMI or user_data we expect the prerequisites are met.
+  # If the user supplies an AMI or custom_data we expect the prerequisites are met.
   count = "${var.num_instances}"
+  count = "${(length(var.image) == 0 && var.custom_data == "") ? var.num : 0}"
 
   connection {
     host        = "${element(azurerm_public_ip.instance_public_ip.*.fqdn, count.index)}"
