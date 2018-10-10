@@ -72,8 +72,9 @@ variable "admin_username" {
 }
 
 # SSH Public Key
-variable "public_ssh_key" {
-  description = "SSH Public Key"
+variable "ssh_public_key" {
+  description = "SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent."
+  default     = ""
 }
 
 # Add special tags to the resources created by this module

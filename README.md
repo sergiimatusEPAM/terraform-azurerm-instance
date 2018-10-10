@@ -40,9 +40,9 @@ module "dcos-master-instances" {
 | num | How many instances should be created | string | - | yes |
 | private_backend_address_pool | Private backend address pool | list | `<list>` | no |
 | public_backend_address_pool | Public backend address pool | list | `<list>` | no |
-| public_ssh_key | SSH Public Key | string | - | yes |
 | resource_group_name | Name of the azure resource group | string | - | yes |
 | ssh_private_key_filename | Path to the SSH private key | string | `/dev/null` | no |
+| ssh_public_key | SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent. | string | `` | no |
 | subnet_id | Subnet ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
 

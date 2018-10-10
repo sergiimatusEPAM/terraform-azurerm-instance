@@ -150,7 +150,7 @@ resource "azurerm_virtual_machine" "instance" {
 
     ssh_keys {
       path     = "/home/${coalesce(var.admin_username, module.dcos-tested-oses.user)}/.ssh/authorized_keys"
-      key_data = "${file(var.public_ssh_key)}"
+      key_data = "${var.public_ssh_key}"
     }
   }
 
