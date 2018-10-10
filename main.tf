@@ -51,7 +51,7 @@ locals {
 
 # instance Node
 resource "azurerm_managed_disk" "instance_managed_disk" {
-  count                = "${var.num_instances}"
+  count                = "${var.num}"
   name                 = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
@@ -62,7 +62,7 @@ resource "azurerm_managed_disk" "instance_managed_disk" {
 
 # Public IP addresses for the Public Front End load Balancer
 resource "azurerm_public_ip" "instance_public_ip" {
-  count                        = "${var.num_instances}"
+  count                        = "${var.num}"
   name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-pub-ip"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
@@ -89,7 +89,7 @@ resource "azurerm_network_interface" "instance_nic" {
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
   network_security_group_id = "${var.network_security_group_id}"
-  count                     = "${var.num_instances}"
+  count                     = "${var.num}"
 
   ip_configuration {
     name                                    = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-ipConfig"
@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine" "instance" {
   network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
   availability_set_id              = "${azurerm_availability_set.instance_av_set.id}"
   vm_size                          = "${var.instance_type}"
-  count                            = "${var.num_instances}"
+  count                            = "${var.num}"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
@@ -160,7 +160,7 @@ resource "azurerm_virtual_machine" "instance" {
 
 resource "null_resource" "instance-prereq" {
   # If the user supplies an AMI or custom_data we expect the prerequisites are met.
-  count = "${var.num_instances}"
+  count = "${var.num}"
   count = "${(length(var.image) == 0 && var.custom_data == "") ? var.num : 0}"
 
   connection {

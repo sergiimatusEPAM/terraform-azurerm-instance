@@ -37,7 +37,7 @@ module "dcos-master-instances" {
 | location | location | string | - | yes |
 | name_prefix | Cluster Name | string | - | yes |
 | network_security_group_id | network security group id | string | `` | no |
-| num_instances | num instances | string | - | yes |
+| num | How many instances should be created | string | - | yes |
 | private_backend_address_pool | private backend address pool | list | `<list>` | no |
 | public_backend_address_pool | public backend address pool | list | `<list>` | no |
 | public_ssh_key | public ssh key | string | - | yes |

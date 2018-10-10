@@ -1,6 +1,6 @@
 # Number of Instance
-variable "num_instances" {
-  description = "num instances"
+variable "num" {
+  description = "How many instances should be created"
 }
 
 # Location (region)
