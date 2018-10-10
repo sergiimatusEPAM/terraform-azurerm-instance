@@ -20,6 +20,7 @@ module "dcos-master-instances" {
 }
 ```
 
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -50,22 +51,7 @@ module "dcos-master-instances" {
 | Name | Description |
 |------|-------------|
 | admin_username | SSH User |
-| dcos_instance_os | Tested OSes to install with prereq |
-| dcos_version | DCOS Version for prereq install |
-| disk_size | Disk Size in GB |
-| disk_type | Disk Type to Leverage |
-| image | Source image to boot from |
-| instance_type | Instance Type |
-| name_prefix | Cluster Name |
-| network_security_group_id | Network Security Group ID |
-| num_instances | Number of Instance |
 | prereq_id | Returns the ID of the prereq script |
-| private_backend_address_pool | Private backend address pool |
 | private_ips | Private IP Addresses |
-| public_backend_address_pool | Public backend address pool |
 | public_ips | Public IP Addresses |
-| public_ssh_key | SSH Public Key |
-| resource_group_name | Resource Group Name |
-| subnet_id | Subnet ID |
-| user_data | Customer Provided Userdata |
 

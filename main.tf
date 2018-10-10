@@ -1,15 +1,15 @@
 /**
  * [![Build Status](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/badge/icon)](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/)
- * 
+ *
  * The module creates AzureRM virtual machine instances
- * 
+ *
  * ## EXAMPLE
- * 
+ *
  * ```hcl
  * module "dcos-master-instances" {
  *   source  = "dcos-terraform/instance/azurerm"
  *   version = "~> 0.0"
- * 
+ *
  *   num_instances                = "${var.num_masters}"
  *   location                     = "${var.location}"
  *   dcos_version                 = "${var.dcos_version}"
@@ -117,7 +117,7 @@ resource "azurerm_virtual_machine" "instance" {
 
   storage_os_disk {
     name              = "os-disk-${format(var.hostname_format, count.index + 1, var.name_prefix)}"
-    caching           = "ReadWrite"
+    caching           = "ReadOnly"
     create_option     = "FromImage"
     managed_disk_type = "${var.disk_type}"
   }
@@ -126,6 +126,7 @@ resource "azurerm_virtual_machine" "instance" {
     name            = "${azurerm_managed_disk.instance_managed_disk.*.name[count.index]}"
     managed_disk_id = "${azurerm_managed_disk.instance_managed_disk.*.id[count.index]}"
     create_option   = "Attach"
+    caching         = "None"
     lun             = 0
     disk_size_gb    = "${azurerm_managed_disk.instance_managed_disk.*.disk_size_gb[count.index]}"
   }
