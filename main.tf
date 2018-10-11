@@ -110,7 +110,7 @@ resource "azurerm_virtual_machine" "instance" {
   resource_group_name              = "${var.resource_group_name}"
   network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
   availability_set_id              = "${azurerm_availability_set.instance_av_set.id}"
-  vm_size                          = "${var.instance_type}"
+  vm_size                          = "${var.vm_size}"
   count                            = "${var.num}"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
