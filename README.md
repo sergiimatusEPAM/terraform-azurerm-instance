@@ -33,7 +33,6 @@ module "dcos-master-instances" {
 | disk_type | Disk Type to Leverage | string | `Standard_LRS` | no |
 | hostname_format | Format the hostname inputs are index+1, region, cluster_name | string | `instance-%[1]d-%[2]s` | no |
 | image | Source image to boot from | map | `<map>` | no |
-| instance_type | Instance Type | string | - | yes |
 | location | Azure Region | string | - | yes |
 | name_prefix | Cluster Name | string | - | yes |
 | network_security_group_id | Security Group Id | string | `` | no |
@@ -45,6 +44,7 @@ module "dcos-master-instances" {
 | ssh_public_key | SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent. | string | `` | no |
 | subnet_id | Subnet ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
+| vm_size | Instance Type | string | - | yes |
 
 ## Outputs
 
