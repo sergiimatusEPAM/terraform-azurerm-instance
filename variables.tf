@@ -15,7 +15,7 @@ variable "name_prefix" {
 
 # Instance Type
 variable "vm_size" {
-  description = "Instance Type"
+  description = "Azure virtual machine size"
 }
 
 # DCOS Version for prereq install

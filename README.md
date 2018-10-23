@@ -44,7 +44,7 @@ module "dcos-master-instances" {
 | ssh_public_key | SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent. | string | `` | no |
 | subnet_id | Subnet ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
-| vm_size | Instance Type | string | - | yes |
+| vm_size | Azure virtual machine size | string | - | yes |
 
 ## Outputs
 
