@@ -1,6 +1,6 @@
 # SSH User
 output "admin_username" {
-  description = "admin username"
+  description = "SSH User"
   value       = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
 }
 
@@ -18,6 +18,6 @@ output "public_ips" {
 
 # Returns the ID of the prereq script
 output "prereq_id" {
-  description = "prereq id"
+  description = "Prereq id used for dependency"
   value       = "${join(",", flatten(list(null_resource.instance-prereq.*.id)))}"
 }
