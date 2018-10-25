@@ -31,7 +31,7 @@ locals {
 
 module "dcos-tested-oses" {
   source  = "dcos-terraform/tested-oses/azurerm"
-  version = "~> 0.0.0"
+  version = "~> 0.1.0"
 
   providers = {
     azurerm = "azurerm"
