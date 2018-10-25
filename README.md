@@ -7,7 +7,7 @@ The module creates AzureRM virtual machine instances
 ```hcl
 module "dcos-master-instances" {
   source  = "dcos-terraform/instance/azurerm"
-  version = "~> 0.0"
+  version = "~> 0.1.0"
 
   num_instances                = "${var.num_masters}"
   location                     = "${var.location}"
