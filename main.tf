@@ -38,7 +38,6 @@ module "dcos-tested-oses" {
   }
 
   os           = "${var.dcos_instance_os}"
-  region       = "${var.location}"
   dcos_version = "${var.dcos_version}"
 }
 
