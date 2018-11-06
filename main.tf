@@ -160,7 +160,6 @@ resource "azurerm_virtual_machine" "instance" {
 
 resource "null_resource" "instance-prereq" {
   # If the user supplies an AMI or custom_data we expect the prerequisites are met.
-  count = "${var.num}"
   count = "${(length(var.image) == 0 && var.custom_data == "") ? var.num : 0}"
 
   connection {
