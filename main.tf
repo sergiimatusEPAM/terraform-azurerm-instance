@@ -158,6 +158,11 @@ resource "azurerm_virtual_machine" "instance" {
 }
 
 resource "null_resource" "instance-prereq" {
+  # Changes to any instance of the cluster requires re-provisioning
+  triggers {
+    current_ec2_instance_id = "${element(azurerm_virtual_machine.instance.*.id, count.index)}"
+  }
+
   # If the user supplies an AMI or custom_data we expect the prerequisites are met.
   count = "${var.num}"
   count = "${(length(var.image) == 0 && var.custom_data == "") ? var.num : 0}"
