@@ -61,12 +61,12 @@ resource "azurerm_managed_disk" "instance_managed_disk" {
 
 # Public IP addresses for the Public Front End load Balancer
 resource "azurerm_public_ip" "instance_public_ip" {
-  count                        = "${var.num}"
-  name                         = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-pub-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "dynamic"
-  domain_name_label            = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
+  count               = "${var.num}"
+  name                = "${format(var.hostname_format, count.index + 1, var.name_prefix)}-pub-ip"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
+  allocation_method   = "Dynamic"
+  domain_name_label   = "${format(var.hostname_format, count.index + 1, var.name_prefix)}"
 
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, var.name_prefix),
                                 "Cluster", var.name_prefix))}"
