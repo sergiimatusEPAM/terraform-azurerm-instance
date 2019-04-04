@@ -8,7 +8,7 @@
  * ```hcl
  * module "dcos-master-instances" {
  *   source  = "dcos-terraform/instance/azurerm"
- *   version = "~> 0.1.0"
+ *   version = "~> 0.2.0"
  *
  *   num_instances                = "${var.num_masters}"
  *   location                     = "${var.location}"
@@ -31,7 +31,7 @@ locals {
 
 module "dcos-tested-oses" {
   source  = "dcos-terraform/tested-oses/azurerm"
-  version = "~> 0.1.0"
+  version = "~> 0.2.0"
 
   providers = {
     azurerm = "azurerm"
