@@ -25,7 +25,7 @@
 provider "azurerm" {}
 
 locals {
-  cluster_name = "${var.name_prefix != "" ? "${var.name_prefix}-${var.clustername}" : var.cluster_name}"
+  cluster_name = "${var.name_prefix != "" ? "${var.name_prefix}-${var.cluster_name}" : var.cluster_name}"
   private_key  = "${file(var.ssh_private_key_filename)}"
   agent        = "${var.ssh_private_key_filename == "/dev/null" ? true : false}"
 }
