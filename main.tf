@@ -101,6 +101,13 @@ resource "azurerm_network_interface" "instance_nic" {
                                 "Cluster", local.cluster_name))}"
 }
 
+data "null_data_source" "ip_configuration" {
+  inputs = {
+    count = "${var.num}"
+    name  = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-ipConfig"
+  }
+}
+
 # Master VM Coniguration
 resource "azurerm_virtual_machine" "instance" {
   name                             = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"

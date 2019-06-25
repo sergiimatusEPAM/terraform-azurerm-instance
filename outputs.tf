@@ -8,6 +8,11 @@ output "instance_nic_ids" {
   value       = ["${azurerm_network_interface.instance_nic.*.id}"]
 }
 
+output "ip_configuration_names" {
+  description = "List of ip configuration names associated with the instance nic ids"
+  value       = ["${data.null_data_source.ip_configuration.outputs["name"]}"]
+}
+
 output "private_ips" {
   description = "List of private ip addresses created by this module"
   value       = ["${azurerm_network_interface.instance_nic.*.private_ip_address}"]
