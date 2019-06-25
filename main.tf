@@ -65,7 +65,7 @@ resource "azurerm_public_ip" "instance_public_ip" {
   name                = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-pub-ip"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
-  allocation_method   = "dynamic"
+  allocation_method   = "Dynamic"
   domain_name_label   = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"
 
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, local.cluster_name),
@@ -93,7 +93,7 @@ resource "azurerm_network_interface" "instance_nic" {
   ip_configuration {
     name                          = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-ipConfig"
     subnet_id                     = "${var.subnet_id}"
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = "${element(azurerm_public_ip.instance_public_ip.*.id, count.index)}"
   }
 
