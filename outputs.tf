@@ -1,6 +1,16 @@
-output "os_user" {
-  description = "The OS user to be used"
+output "admin_username" {
+  description = "SSH User"
   value       = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+}
+
+output "instance_nic_ids" {
+  description = "List of instance nic ids created by this module"
+  value       = ["${azurerm_network_interface.instance_nic.*.id}"]
+}
+
+output "ip_configuration_names" {
+  description = "List of ip configuration names associated with the instance nic ids"
+  value       = ["${azurerm_network_interface.instance_nic.*.ip_configuration.name}"]
 }
 
 output "private_ips" {
