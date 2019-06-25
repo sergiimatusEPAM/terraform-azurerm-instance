@@ -38,8 +38,7 @@ module "dcos-tested-oses" {
     azurerm = "azurerm"
   }
 
-  os           = "${var.dcos_instance_os}"
-  dcos_version = "${var.dcos_version}"
+  os = "${var.dcos_instance_os}"
 }
 
 locals {
