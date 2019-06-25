@@ -24,9 +24,9 @@ module "dcos-master-instances" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| admin\_username | SSH User | string | n/a | yes |
+| cluster\_name | Name of the DC/OS cluster | string | n/a | yes |
 | dcos\_instance\_os | Operating system to use. Instead of using your own AMI you could use a provided OS. | string | n/a | yes |
-| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | n/a | yes |
+| dcos\_version | Specifies which DC/OS version instruction to use. Options: 1.13.1, 1.12.3, 1.11.10, etc. See dcos_download_path or dcos_version tree for a full list. | string | n/a | yes |
 | disk\_size | Disk Size in GB | string | n/a | yes |
 | location | Azure Region | string | n/a | yes |
 | name\_prefix | Name Prefix | string | n/a | yes |
@@ -34,6 +34,7 @@ module "dcos-master-instances" {
 | resource\_group\_name | Name of the azure resource group | string | n/a | yes |
 | subnet\_id | Subnet ID | string | n/a | yes |
 | vm\_size | Azure virtual machine size | string | n/a | yes |
+| admin\_username | SSH User | string | `""` | no |
 | custom\_data | User data to be used on these instances (cloud-init) | string | `""` | no |
 | disk\_type | Disk Type to Leverage | string | `"Standard_LRS"` | no |
 | hostname\_format | Format the hostname inputs are index+1, region, cluster_name | string | `"instance-%[1]d-%[2]s"` | no |
@@ -49,8 +50,7 @@ module "dcos-master-instances" {
 
 | Name | Description |
 |------|-------------|
-| admin\_username | SSH User |
-| prereq\_id | Prereq id used for dependency |
+| os\_user | The OS user to be used |
 | private\_ips | List of private ip addresses created by this module |
 | public\_ips | List of public ip addresses created by this module |
 
