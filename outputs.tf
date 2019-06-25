@@ -1,5 +1,5 @@
-output "admin_username" {
-  description = "SSH User"
+output "os_user" {
+  description = "The OS user to be used"
   value       = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
 }
 
