@@ -55,7 +55,7 @@ variable "admin_username" {
   default     = ""
 }
 
-variable "ssh_public_key" {
+variable "public_ssh_key" {
   description = "SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent."
   default     = ""
 }
