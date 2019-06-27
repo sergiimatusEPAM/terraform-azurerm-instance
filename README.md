@@ -40,8 +40,8 @@ module "dcos-master-instances" {
 | network\_security\_group\_id | Security Group Id | string | `""` | no |
 | private\_backend\_address\_pool | Private backend address pool | list | `<list>` | no |
 | public\_backend\_address\_pool | Public backend address pool | list | `<list>` | no |
+| public\_ssh\_key | SSH Public Key | string | `""` | no |
 | ssh\_private\_key\_filename | Path to the SSH private key | string | `"/dev/null"` | no |
-| ssh\_public\_key | SSH public key in authorized keys format (e.g. 'ssh-rsa ..') to be used with the instances. Make sure you added this key to your ssh-agent. | string | `""` | no |
 | tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
