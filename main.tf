@@ -12,7 +12,6 @@
  *
  *   num_instances                = "${var.num_masters}"
  *   location                     = "${var.location}"
- *   dcos_version                 = "${var.dcos_version}"
  *   dcos_instance_os             = "${var.dcos_instance_os}"
  *   ssh_private_key_filename     = "${var.ssh_private_key_filename}"
  *   image                        = "${var.image}"
