@@ -76,7 +76,7 @@ resource "azurerm_availability_set" "instance_av_set" {
   name                         = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-avset"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
-  platform_fault_domain_count  = 3
+  platform_fault_domain_count  = "${var.avset_platform_fault_domain_count}"
   platform_update_domain_count = 1
   managed                      = true
 }

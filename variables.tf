@@ -95,3 +95,8 @@ variable "subnet_id" {
 variable "name_prefix" {
   description = "Name Prefix"
 }
+
+variable "avset_platform_fault_domain_count" {
+  description = "Availabilty set platform fault domain count, differs from location to location"
+  default     = 3
+}
