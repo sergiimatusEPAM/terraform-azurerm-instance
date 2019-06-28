@@ -73,6 +73,7 @@ resource "azurerm_public_ip" "instance_public_ip" {
 
 # Create an availability set
 resource "azurerm_availability_set" "instance_av_set" {
+  count                        = "${var.num}"
   name                         = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-avset"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
