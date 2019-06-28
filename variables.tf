@@ -97,6 +97,6 @@ variable "name_prefix" {
 }
 
 variable "avset_platform_fault_domain_count" {
-  description = "Availabilty set platform fault domain count, differs from location to location"
+  description = "Availability set platform fault domain count, differs from location to location"
   default     = 3
 }
