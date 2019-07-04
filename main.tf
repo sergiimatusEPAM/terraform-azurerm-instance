@@ -1,9 +1,12 @@
 /**
- * [![Build Status](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/badge/icon)](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/master/)
+ * [![Build Status](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/buildStatus/icon?job=dcos-terraform%2Fterraform-azurerm-instance%2Fsupport%252F0.2.x)](https://jenkins-terraform.mesosphere.com/service/dcos-terraform-jenkins/job/dcos-terraform/job/terraform-azurerm-instance/job/support%252F0.2.x/)
  *
+ * Azure Instance
+ * ============
  * The module creates AzureRM virtual machine instances
  *
- * ## EXAMPLE
+ * EXAMPLE
+ * -------
  *
  * ```hcl
  * module "dcos-master-instances" {
@@ -73,7 +76,7 @@ resource "azurerm_public_ip" "instance_public_ip" {
 
 # Create an availability set
 resource "azurerm_availability_set" "instance_av_set" {
-  count                        = "${var.num}"
+  count                        = "${var.num == 0 ? 0 : 1}"
   name                         = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-avset"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
@@ -108,13 +111,12 @@ data "null_data_source" "ip_configuration" {
   }
 }
 
-# Master VM Coniguration
 resource "azurerm_virtual_machine" "instance" {
   name                             = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"
   location                         = "${var.location}"
   resource_group_name              = "${var.resource_group_name}"
   network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
-  availability_set_id              = "${azurerm_availability_set.instance_av_set.id}"
+  availability_set_id              = "${element(azurerm_availability_set.instance_av_set.*.id, 0)}"
   vm_size                          = "${var.vm_size}"
   count                            = "${var.num}"
   delete_os_disk_on_termination    = true
