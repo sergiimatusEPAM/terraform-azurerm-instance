@@ -13,7 +13,7 @@
  *   source  = "dcos-terraform/instance/azurerm"
  *   version = "~> 0.2.0"
  *
- *   num_instances                = "${var.num_masters}"
+ *   num                          = "${var.num}"
  *   location                     = "${var.location}"
  *   dcos_instance_os             = "${var.dcos_instance_os}"
  *   ssh_private_key_filename     = "${var.ssh_private_key_filename}"
@@ -151,6 +151,18 @@ resource "azurerm_virtual_machine" "instance" {
     ssh_keys {
       path     = "/home/${coalesce(var.admin_username, module.dcos-tested-oses.user)}/.ssh/authorized_keys"
       key_data = "${file(var.public_ssh_key)}"
+    }
+  }
+
+  os_profile_windows_config {
+    provision_vm_agent = true
+    enable_automatic_upgrades = false
+
+    additional_unattend_config {
+      component = "oobeSystem"
+      content = "Microsoft-Windows-Shell-Sleep"
+      pass = "AutoLogon"
+      setting_name = "<AutoLogon><Password><Value>${var.admin_password}</Value></Password><Enabled>true</Enabled><LogonCount>1</LogonCount><Username>${var.admin_username}</Username></AutoLogon>"
     }
   }
 

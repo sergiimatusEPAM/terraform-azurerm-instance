@@ -3,6 +3,11 @@ output "admin_username" {
   value       = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
 }
 
+output "admin_password" {
+  description = "Windows admin password"
+  value       = "${coalesce(var.admin_password, module.dcos-tested-oses.password)}"
+}
+
 output "instance_nic_ids" {
   description = "List of instance nic ids created by this module"
   value       = ["${azurerm_network_interface.instance_nic.*.id}"]

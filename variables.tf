@@ -55,6 +55,11 @@ variable "admin_username" {
   default     = ""
 }
 
+variable "admin_password" {
+  description = "Windows admin password"
+  default = ""
+}
+
 variable "public_ssh_key" {
   description = "SSH Public Key"
   default     = ""

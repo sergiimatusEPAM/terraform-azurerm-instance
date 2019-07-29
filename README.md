@@ -12,7 +12,7 @@ module "dcos-master-instances" {
   source  = "dcos-terraform/instance/azurerm"
   version = "~> 0.2.0"
 
-  num_instances                = "${var.num_masters}"
+  num                          = "${var.num}"
   location                     = "${var.location}"
   dcos_instance_os             = "${var.dcos_instance_os}"
   ssh_private_key_filename     = "${var.ssh_private_key_filename}"
