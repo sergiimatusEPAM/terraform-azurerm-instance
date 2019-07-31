@@ -5,7 +5,7 @@ output "admin_username" {
 
 output "admin_password" {
   description = "Windows admin password"
-  value       = "${coalesce(var.admin_password, module.dcos-tested-oses.password)}"
+  value       = "${var.admin_password}"
 }
 
 output "instance_nic_ids" {
