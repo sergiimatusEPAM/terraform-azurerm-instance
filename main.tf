@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine" "instance" {
   network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
   availability_set_id              = "${element(azurerm_availability_set.instance_av_set.*.id, 0)}"
   vm_size                          = "${var.vm_size}"
-  count                            = "${var.num}"
+  count                            = "${var.is_windows ? 0 : var.num}"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
@@ -154,6 +154,52 @@ resource "azurerm_virtual_machine" "instance" {
     }
   }
 
+  tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, local.cluster_name),
+                                "Cluster", local.cluster_name))}"
+}
+
+resource "azurerm_virtual_machine" "windows_instance" {
+  name                             = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"
+  location                         = "${var.location}"
+  resource_group_name              = "${var.resource_group_name}"
+  network_interface_ids            = ["${element(azurerm_network_interface.instance_nic.*.id, count.index)}"]
+  availability_set_id              = "${element(azurerm_availability_set.instance_av_set.*.id, 0)}"
+  vm_size                          = "${var.vm_size}"
+  count                            = "${var.is_windows ? var.num : 0}"
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+
+  storage_image_reference {
+    publisher = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_publisher}"
+    offer     = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_offer}"
+    sku       = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_sku}"
+    version   = "${contains(keys(var.image), "id") ? "" : module.dcos-tested-oses.azure_version}"
+    id        = "${lookup(var.image, "id", "")}"
+  }
+
+  storage_os_disk {
+    name              = "os-disk-${format(var.hostname_format, count.index + 1, local.cluster_name)}"
+    caching           = "ReadOnly"
+    create_option     = "FromImage"
+    managed_disk_type = "${var.disk_type}"
+  }
+
+  storage_data_disk {
+    name            = "${azurerm_managed_disk.instance_managed_disk.*.name[count.index]}"
+    managed_disk_id = "${azurerm_managed_disk.instance_managed_disk.*.id[count.index]}"
+    create_option   = "Attach"
+    caching         = "None"
+    lun             = 0
+    disk_size_gb    = "${azurerm_managed_disk.instance_managed_disk.*.disk_size_gb[count.index]}"
+  }
+
+  os_profile {
+    computer_name  = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"
+    admin_username = "${coalesce(var.admin_username, module.dcos-tested-oses.user)}"
+    admin_password = "${var.admin_password}"
+    custom_data    = "${var.custom_data}"
+  }
+
   os_profile_windows_config {
     provision_vm_agent = true
     enable_automatic_upgrades = false
@@ -165,7 +211,6 @@ resource "azurerm_virtual_machine" "instance" {
       setting_name = "<AutoLogon><Password><Value>${var.admin_password}</Value></Password><Enabled>true</Enabled><LogonCount>1</LogonCount><Username>${var.admin_username}</Username></AutoLogon>"
     }
   }
-
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, local.cluster_name),
                                 "Cluster", local.cluster_name))}"
 }
