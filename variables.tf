@@ -107,6 +107,6 @@ variable "avset_platform_fault_domain_count" {
 }
 
 variable "is_windows" {
-  description = "Flag to distinquish Windows instance"
-  default     = false
+  description = "Flag to distinquish instance from Windows, by default Linux takes priority"
+  default     = 0
 }
