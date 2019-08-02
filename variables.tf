@@ -105,8 +105,3 @@ variable "avset_platform_fault_domain_count" {
   description = "Availability set platform fault domain count, differs from location to location"
   default     = 3
 }
-
-variable "is_windows" {
-  description = "Flag to distinquish instance from Windows, by default Linux takes priority"
-  default     = 0
-}
