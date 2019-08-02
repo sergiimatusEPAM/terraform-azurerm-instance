@@ -68,7 +68,7 @@ resource "azurerm_public_ip" "instance_public_ip" {
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
   allocation_method   = "Dynamic"
-  domain_name_label   = "${format(var.hostname_format, count.index + 1, local.cluster_name)}"
+  domain_name_label   = "${format(var.hostname_format, count.index + 1, local.cluster_name)}-"
 
   tags = "${merge(var.tags, map("Name", format(var.hostname_format, (count.index + 1), var.location, local.cluster_name),
                                 "Cluster", local.cluster_name))}"
